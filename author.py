@@ -7,7 +7,7 @@ class Author:
         if book_name.strip() not in self.books:
             self.books.append(book_name)
         else:
-            print(f"The book \"{book_name}\" by {self.author_name} already exists")
+            print(f"The book \"{book_name}\" by {self.author_name} already exists. \"{book_name}\" was not added.")
     
     def __str__(self):
         output_str = self.author_name + ":"
@@ -35,10 +35,13 @@ def main():
     actual_str = str(austen)
     
     try:
-        assert expected_str == actual_str
-        print(actual_str)
-    except AssertionError:
-        print(f"Actual string didn't match expected string.\nActual string--\n{actual_str}\nExpected string--\n{expected_str}")
+        assert expected_str == actual_str, f"__str__ method failed: Actual string didn't match expected string.\nActual string --\n{actual_str}\nExpected string --\n{expected_str}"
+        print("__str__ method passed")
+        
+        assert "Emma " not in austen.books, f"publish method failed: Did not reject a duplicate book."
+        print("publish method passed")
+    except AssertionError as msg:
+        print(msg)
     
 
 if __name__ == "__main__":
